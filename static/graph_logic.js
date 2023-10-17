@@ -34,7 +34,8 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
         opacity: 0.70,
         marker: {
             color: '#1f77b4'
-        }
+        },
+        hovertemplate: '%{y:$,.2f}', // Format as dollars with two decimal places
     };
 
     let county2Trace = {
@@ -45,7 +46,8 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
         opacity: 0.70,
         marker: {
             color: '#ff7f0e'
-        }
+        },
+        hovertemplate: '%{y:$,.2f}', // Format as dollars with two decimal places
     };
 
     let gdpTrace = {
@@ -56,7 +58,8 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
         line: {
             color: 'green'
         },
-        type: 'scatter'
+        type: 'scatter',
+        hovertemplate: '%{y:$,.2f}', // Format as dollars with two decimal places
     };
 
     let interestTrace = {
@@ -67,7 +70,8 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
         line: {
             color: '#d62728'
         },
-        type: 'scatter'
+        type: 'scatter',
+        hovertemplate: '%{y:.2f}%', // Format as percentage with two decimal places
     };
 
     let unemploymentTrace = {
@@ -78,7 +82,8 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
         line: {
             color: '#9467bd'
         },
-        type: 'scatter'
+        type: 'scatter',
+        hovertemplate: '%{y:.2f}%', // Format as percentage with two decimal places
     };
 
     let data = [county1Trace, county2Trace, gdpTrace, interestTrace, unemploymentTrace];
@@ -98,16 +103,16 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
             domain: [0, 0.88]
         },
         yaxis: {
-            title: 'Median Housing Price',
+            title: 'Median Housing Price ($)',
             titlefont: {
-                color: '#1f77b4'
+                color: '#000000'
             },
             tickfont: {
-                color: '#1f77b4'
+                color: '#000000'
             },
         },
         yaxis2: {
-            title: 'GDP',
+            title: 'GDP ($)',
             titlefont: {
                 color: 'green'
             },
@@ -120,7 +125,7 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
             position: 1
         },
         yaxis3: {
-            title: 'Interest Rate',
+            title: 'Interest Rate (%)',
             titlefont: {
                 color: '#d62728'
             },
@@ -133,7 +138,7 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
             position: 0.95
         },
         yaxis4: {
-            title: 'Unemployment Rate',
+            title: 'Unemployment Rate (%)',
             titlefont: {
                 color: '#9467bd'
             },

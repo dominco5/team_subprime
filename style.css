@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 html, body, #map {
@@ -23,4 +24,53 @@ html, body, #map {
 .map-title {
     text-align: center;
     margin: 10px;
+}
+
+h1 {
+    background-color: #337ab7; 
+    color: white;
+    padding: 10px;
+    text-align: center; 
+}
+
+h1, h2, h4 {
+    font-family: Georgia; 
+}
+
+select {
+    font-family: Georgia;
+}
+
+p {
+    font-family: Georgia; 
+}
+
+
+.box {
+    background-color: rgba(174, 172, 182, 0.495);
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; 
+}
+
+
+#choropleth-map {
+    width: 80%; 
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+#date-slider {
+    width: 80%; 
+    margin: 10px auto; 
+}
+
+#selected-date {
+    text-align: center;
+}
+
+#slider-container label h4 {
+    margin: 10px 0 5px; 
 }

@@ -124,7 +124,7 @@ function init() {
     let dropDown1 = d3.select("#selDataset1"); 
     let dropDown2 = d3.select("#selDataset2");
 
-    d3.json("AA_code/Resources/pricing_data.json").then(function(dataset) {
+    d3.json("Resources/pricing_data.json").then(function(dataset) {
         let counties = Object.keys(dataset);
 
         let optionCount = 3;
@@ -281,7 +281,7 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
 }
 
 function optionChanged() {
-    d3.json("AA_code/Resources/pricing_data.json").then(function(dataset) {
+    d3.json("Resources/pricing_data.json").then(function(dataset) {
         let county1 = d3.select("#selDataset1").property("value");
         let county2 = d3.select("#selDataset2").property("value");
 
@@ -291,7 +291,7 @@ function optionChanged() {
 
 init();
 
-d3.json("AA_code/Resources/date_data.json").then(function(datedataset) {
+d3.json("Resources/date_data.json").then(function(datedataset) {
   const dateKeys = Object.keys(datedataset);
   const dateSlider = document.getElementById("date-slider");
   const selectedDate = document.getElementById("selected-date");
@@ -331,7 +331,7 @@ d3.json("AA_code/Resources/date_data.json").then(function(datedataset) {
           z: Object.values(housingPrices),
           colorscale: 'Portland',
           colorbar: {
-            title: 'Median Housing Prices',
+            title: 'Median Housing Prices ($)',
             titleside: 'top',
             tickmode: 'array'
           },
@@ -367,6 +367,5 @@ d3.json("AA_code/Resources/date_data.json").then(function(datedataset) {
   plotHousingPrices(0); // Initial plot
 });
 
-  
 
 
