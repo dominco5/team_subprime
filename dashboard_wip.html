@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>California Dashboard</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
+
+    <!-- Our CSS (you should create and link to your style.css) -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <!-- Plotly JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-12 jumbotron text-center">
+          <h1 style="text-align: center;">California Housing Prices Analysis</h1>
+        </div>
+
+        <div class="box" id="map-box" style="margin-bottom: 20px;">
+            <h2 style="text-align: center;">2023 Median Housing Prices in California</h2>
+            
+            <div id="map" style="width: 800px; height: 600px; margin: 0 auto;"></div>
+        </div>
+        
+        <div class="box" id="plot-box" style="margin-top: 50px;">
+            <h2 style="text-align: center;">County Price Comparison Plot</h2>
+            <div class="well">
+                <h5>Select Counties to Compare:</h5>
+                <select id="selDataset1" onchange="optionChanged(this.value)"></select>
+                <select id="selDataset2" onchange="optionChanged(this.value)"></select>
+            </div>
+            <div id="plot"></div>
+
+            <div class="box" id="plot-box" style="margin-top: 50px;">
+            <h2 style="text-align: center;">Choropleth Map of Housing Prices by Date</h2>
+            <div id="slider-container" style="width: 80%; margin: 0 auto; text-align: center;">
+                <input type="range" id="date-slider" min="0" max="100" step="1" value="0" style="width: 100%;">
+                <span id="selected-date" style="display: block; text-align: center;">1/1/90</span>
+            </div>
+            <div id="choropleth-map"></div>  
+        </div>
+        
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+    <!-- D3 JavaScript -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- JavaScript -->
+    <script type="text/javascript" src="app_wip.js"></script>
+</body>
+
+</html>
