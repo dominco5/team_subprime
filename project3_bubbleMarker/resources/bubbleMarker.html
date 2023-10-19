@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>California vs. Florida</h1>
+
+    <h2>Income-to-Price Ratio:</h2>
+       <p>Comparing the median home price to the median household income can give a rough indication of affordability.<br>
+        In this case, the ratio is approximately 9.3 for California & 6.8 for Florida.<br>
+        A lower ratio is generally more favorable for homebuyers, suggesting that housing costs are a smaller proportion of their income.</p
+
+<!-- Container for the Plotly chart -->
+    <div id="myDiv"></div>
+
+    <script>
+        // Load CSV data using Plotly.d3
+        Plotly.d3.csv('california_florida.csv', function (err, data) {
+            if (err) {
+                // Handle error if CSV loading fails
+                console.error('Error loading CSV:', err);
+                return;
+            }
+
+            // Object to store data for each combination of year and state
+            var lookup = {};
+
+            // Function to get data for a specific year and state
+            function getData(year, state) {
+                var key = year + '-' + state;
+                if (!lookup[key]) {
+                    lookup[key] = {
+                        x: [],
+                        y: [],
+                        id: [],
+                        text: [],
+                        marker: { size: [] }
+                    };
+                }
+                return lookup[key];
+            }
+
+            // Process CSV data and populate the lookup object
+            data.forEach(function (datum) {
+                var trace = getData(datum.year, datum.state);
+                trace.text.push(datum.county);
+                trace.id.push(datum.county);
+                trace.x.push(datum.household_income);
+                trace.y.push(datum.house_price);
+                trace.marker.size.push(datum.pop);   //size of the marker is big and small is due to popolation of each county.
+            });
+
+            // Extract unique combinations of year and state
+            var keys = Object.keys(lookup);
+
+            // Create traces for Plotly based on the processed data
+            var traces = keys.map(function (key) {
+                var data = lookup[key];
+                var [year, state] = key.split('-');    //code from plotly documentation.
+                return {
+                    name: state + ' - ' + year,
+                    x: data.x.slice(),
+                    y: data.y.slice(),
+                    id: data.id.slice(),
+                    text: data.text.slice(),
+                    mode: 'markers',
+                    marker: {
+                        size: data.marker.size.slice(),
+                        sizemode: 'area',
+                        sizeref: 1000
+                    }
+                };
+            });
+
+            // Layout configuration for the Plotly chart
+            var layout = {
+                title: {
+                    //text: 'California Vs Florida Housing Price',
+                    //font: {
+                        //size: 24,
+                        //bold: 'bold'
+                    //}
+                },
+                xaxis: {
+                    title: 'Median household income',
+                    font: {
+                        size: 22,
+                        bold: true     // Set bold to true for x-axis text
+                    }
+                },
+                yaxis: {
+                    title: 'House price',
+                    type: 'log',
+                    font: {
+                        size: 22,
+                        bold: true
+                    }
+                },
+                hovermode: 'closest'
+            };
+            
+
+
+
+
+
+            // Create the Plotly chart in the specified div
+            Plotly.plot('myDiv', {
+                data: traces,
+                layout: layout
+            });
+        });
+    </script>
+</body>
+</html>
