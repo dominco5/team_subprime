@@ -15,6 +15,7 @@ Datasets:
 - https://fred.stlouisfed.org/series/FEDFUNDS
 - https://fred.stlouisfed.org/series/CAUR
 - https://www.alphavantage.co/documentation/
+- https://github.com/plotly/datasets/blob/master/geojson-counties-fips.json
 
 JavaScript Libraries:
 
