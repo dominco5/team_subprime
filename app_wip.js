@@ -1,5 +1,5 @@
 // Create a Leaflet map with a specified center and zoom level
-const mymap = L.map('map').setView([36.7783, -119.4179], 6);
+const mymap = L.map('map').setView([37.2, -117], 6);
 
 // Add a tile layer from OpenStreetMap to the map
 L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
@@ -291,81 +291,109 @@ function optionChanged() {
 
 init();
 
-d3.json("Resources/date_data.json").then(function(datedataset) {
-  const dateKeys = Object.keys(datedataset);
-  const dateSlider = document.getElementById("date-slider");
-  const selectedDate = document.getElementById("selected-date");
-
-  dateSlider.max = dateKeys.length - 1;
-
-  function plotHousingPrices(dateIndex) {
-    const date = dateKeys[dateIndex];
-
-    if (!datedataset[date] || !datedataset[date].Counties) {
-      console.error('Data not available for the selected date.');
-      return;
-    }
-
-    const housingPrices = {};
-    const countyNames = {};
-    for (const countyKey in datedataset[date].Counties) {
-      if (countyKey !== "CA") {
-        const countyData = datedataset[date].Counties[countyKey];
-        const fipsCode = countyData.FIPS;
-        const price = countyData.Price;
-
-        const name = countyKey;
-
-        housingPrices[fipsCode] = price;
-        countyNames[fipsCode] = name;
-      }
-    }
-
-    fetch("https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json")
-      .then(response => response.json())
-      .then(geojson => {
-        const data = [{
-          type: 'choropleth',
-          geojson: geojson,
-          locations: Object.keys(housingPrices),
-          z: Object.values(housingPrices),
-          colorscale: 'Portland',
-          colorbar: {
-            title: 'Median Housing Prices ($)',
-            titleside: 'top',
-            tickmode: 'array'
-          },
-          showscale: true,
-          hoverinfo: 'text',
-          text: Object.keys(countyNames).map(fipsCode => `<b>County:</b> ${countyNames[fipsCode]}<br><b>Price:</b> $${housingPrices[fipsCode].toLocaleString()}`), // Make text bold
-        }];
-
-        const layout = {
-          geo: {
-            scope: 'usa',
-            center: { lon: -120.4179, lat: 36.7783 },
-            showland: true,
-            landcolor: 'rgb(217, 217, 217)',
-            projection: { scale: 2.2 },
-          },
-          title: `Median Housing Prices - ${date}`,
-          width: 1200,
-          height: 700,
-        };
-
-        Plotly.newPlot('choropleth-map', data, layout);
-        selectedDate.textContent = date;
-      })
-      .catch(error => console.error(error));
+function plotHousingPricesTable(dateIndex, housingPrices, countyNames) {
+    let sortedCounties = Object.keys(housingPrices).sort((a, b) => housingPrices[b] - housingPrices[a]);
+  
+    let topCounties = sortedCounties.slice(0, 10);
+  
+    let table = document.getElementById("top-counties-table");
+    let tbody = table.querySelector("tbody");
+    tbody.innerHTML = "";
+  
+    topCounties.forEach(fipsCode => {
+        let countyName = countyNames[fipsCode];
+        let price = housingPrices[fipsCode].toLocaleString();
+  
+        let row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${countyName}</td>
+        <td>$${price}</td>
+      `;
+  
+      tbody.appendChild(row);
+    });
   }
-
-  dateSlider.addEventListener("input", function () {
-    const dateIndex = parseInt(dateSlider.value);
-    plotHousingPrices(dateIndex);
+  
+  d3.json("Resources/date_data.json").then(function(datedataset) {
+    let dateKeys = Object.keys(datedataset);
+    let dateSlider = document.getElementById("date-slider");
+    let selectedDate = document.getElementById("selected-date");
+  
+    dateSlider.max = dateKeys.length - 1;
+  
+    function plotHousingPrices(dateIndex) {
+      let date = dateKeys[dateIndex];
+  
+      if (!datedataset[date] || !datedataset[date].Counties) {
+        console.error('Data not available for the selected date.');
+        return;
+      }
+  
+      let housingPrices = {};
+      let countyNames = {};
+      for (let countyKey in datedataset[date].Counties) {
+        if (countyKey !== "CA") {
+          let countyData = datedataset[date].Counties[countyKey];
+          let fipsCode = countyData.FIPS;
+          let price = countyData.Price;
+  
+          let name = countyKey;
+  
+          housingPrices[fipsCode] = price;
+          countyNames[fipsCode] = name;
+        }
+      }
+  
+      fetch("https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json")
+        .then(response => response.json())
+        .then(geojson => {
+          let data = [{
+            type: 'choropleth',
+            geojson: geojson,
+            locations: Object.keys(housingPrices),
+            z: Object.values(housingPrices),
+            colorscale: 'Portland',
+            colorbar: {
+              title: 'Median Housing Prices ($)',
+              titleside: 'top',
+              tickmode: 'array'
+            },
+            showscale: true,
+            hoverinfo: 'text',
+            text: Object.keys(countyNames).map(fipsCode => `<b>County:</b> ${countyNames[fipsCode]}<br><b>Price:</b> $${housingPrices[fipsCode].toLocaleString()}`),
+          }];
+  
+          let layout = {
+            geo: {
+              scope: 'usa',
+              center: { lon: -120.4179, lat: 36.7783 },
+              showland: true,
+              landcolor: 'rgb(217, 217, 217)',
+              projection: { scale: 2.3 },
+            },
+            title: `Median Housing Prices - ${date}`,
+            width: 1200,
+            height: 700,
+          };
+  
+          Plotly.newPlot('choropleth-map', data, layout);
+          selectedDate.textContent = date;
+  
+          // Call the table population function
+          plotHousingPricesTable(dateIndex, housingPrices, countyNames);
+        })
+        .catch(error => console.error(error));
+    }
+  
+    dateSlider.addEventListener("input", function () {
+      let dateIndex = parseInt(dateSlider.value);
+      plotHousingPrices(dateIndex);
+    });
+  
+    plotHousingPrices(0); 
   });
+  
 
-  plotHousingPrices(0); // Initial plot
-});
 
 
 

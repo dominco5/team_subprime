@@ -7,6 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>California Dashboard</title>
 
+    <style>
+        .title {
+            font-weight: bold;
+            font-size: 70px;
+            color: white; /* Text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            -webkit-text-stroke: 2.5px black; /* Outline for WebKit-based browsers */
+            text-stroke: 2.5px black; /* Standard property for supported browsers */
+        }
+      </style>
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY"
@@ -17,23 +28,31 @@
 
     <!-- Plotly JavaScript -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Bootstrap (Latest compiled and minified CSS) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap (Latest compiled JavaScript) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </head>
 
 <body>
     <div class="row">
         <div class="col-md-12 jumbotron text-center">
-            <h1>California Housing Prices Analysis</h1>
+            <h1 class="title">California Housing Prices Analysis</h1>
         </div>
 
-        <div class="box" id="map-box" style="margin-bottom: 20px;">
-            <h2>2023 Median Housing Prices in California</h2>
+        <div class="box" id="map-box" style="margin-bottom: 10px;">
+            <h2 style="text-indent: 20px;">2023 Median Housing Prices in California</h2>
 
             <div id="map" style="width: 800px; height: 600px; margin: 0 auto;"></div>
         </div>
 
-        <div class="box" id="plot-box" style="margin-top: 50px;">
-            <h2>County Comparison with Economic Indicators</h2>
-            <div class="well">
+        <div class="box" id="plot-box" style="margin-top: 10px;">
+            <h2 style="text-indent: 20px;">County Comparison Graph with Economic Indicators</h2>
+            <div class="well" style="padding-left: 50px;">
                 <h4>Select Counties to Compare:</h4>
                 <select id="selDataset1" onchange="optionChanged(this.value)"></select>
                 <select id="selDataset2" onchange="optionChanged(this.value)"></select>
@@ -41,17 +60,37 @@
             <div id="plot"></div>
                 
         </div>
-
-        <div class="box" id="plot-box" style="margin-top: 50px;">
-            <h2>Choropleth Map of Median Housing Prices Over Time</h2>
-            <div id="slider-container" style="width: 80%; margin: 0 auto; text-align: center;">
-                <label for="date-slider"><h4>Use the slider to select a date to visualize:</h4></label>
-                <input type="range" id="date-slider" min="0" max="100" step="1" value="0" style="width: 100%;">
-                <span id="selected-date" style="display: block; text-align: center;">1/1/90</span>
+        
+        <div class="box" id="plot-box" style="display: flex;">
+            <div style="flex: 1; margin-right: 10px;">
+                <h2 style="text-indent: 20px;">Map of Median Housing Prices Over Time</h2>
+                <div id="slider-container" style="width: 80%; margin: 0 auto; text-align: center;">
+                    <label for="date-slider"><h4>Use the slider to select a date to visualize:</h4></label>
+                    <input type="range" id="date-slider" min="0" max="100" step="1" value="0" style="width: 100%;">
+                    <span id="selected-date" style="display: block; text-align: center;">1/1/90</span>
+                </div>
+                <div id="choropleth-map-container" style="text-align: center; margin: 0 auto;">
+                    <div id="choropleth-map"></div>
+                </div>
             </div>
-            <div id="choropleth-map"></div>
-            
+            <div style="flex: 1; margin-right: 10px; margin-top: 10px; text-align: right;">
+                <div id="top-counties-table-container">
+                    <h3 class="table-title">Top 10 Most Expensive Counties</h3>
+                    <table id="top-counties-table" class="grid">
+                        <thead>
+                            <tr>
+                                <th>County</th>
+                                <th>Median Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+        
 
     </div>
 
@@ -64,16 +103,14 @@
     <!-- JavaScript -->
     <script type="text/javascript" src="app_wip.js"></script>
 
-    <h2>California vs. Florida</h2>
-
 <!-- Container for the Plotly chart -->
-<div class="box" id="plot-box" style="margin-top: 50px;">
-    <div id="myDiv"></div>
+<div class="box" id="plot-box" style="margin-top: 10px;">
+    <h2>California Housing Prices vs. Florida Housing Prices</h2>
     <h3>Income-to-Price Ratio:</h3>
     <p>Comparing the median home price to the median household income can give a rough indication of affordability.<br>
-     In this case, the ratio is approximately 9.3 for California & 6.8 for Florida.<br>
-     A lower ratio is generally more favorable for homebuyers, suggesting that housing costs are a smaller proportion of their income.
-
+    In this case, the ratio is approximately 9.3 for California & 6.8 for Florida.<br>
+    A lower ratio is generally more favorable for homebuyers, suggesting that housing costs are a smaller proportion of their income.
+     <div id="myDiv"></div>
     <script>
         // Load CSV data using Plotly.d3
         Plotly.d3.csv('project3_bubbleMarker/resources/california_florida.csv', function (err, data) {
@@ -146,7 +183,7 @@
                     title: 'Median household income',
                     font: {
                         size: 22,
-                        bold: true     // Set bold to true for x-axis text
+                        bold: true 
                     }
                 },
                 yaxis: {
@@ -160,12 +197,6 @@
                 hovermode: 'closest'
             };
             
-
-
-
-
-
-            // Create the Plotly chart in the specified div
             Plotly.plot('myDiv', {
                 data: traces,
                 layout: layout

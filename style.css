@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: Georgia;
 }
 
 html, body, #map {
@@ -27,13 +27,15 @@ html, body, #map {
 }
 
 h1 {
-    background-color: #337ab7; 
-    color: white;
-    padding: 10px;
-    text-align: center; 
+    background: url('https://cdn.vox-cdn.com/thumbor/lN8mI8h_lKGSOpMz4gXOkArd-GQ=/1400x788/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10253661/shutterstock_472344748.jpg') center center no-repeat;
+    background-size: cover;
+    padding: 75px;
+    text-align: center;
+    margin: 20;
 }
 
-h1, h2, h4 {
+
+h1, h2, h3, h4, th, td{
     font-family: Georgia; 
 }
 
@@ -54,6 +56,11 @@ p {
     margin-bottom: 20px; 
 }
 
+#choropleth-map {
+    width: 80%; 
+    margin: 0 auto;
+    text-align: center;
+}
 
 #choropleth-map {
     width: 80%; 
@@ -74,3 +81,31 @@ p {
 #slider-container label h4 {
     margin: 10px 0 5px; 
 }
+
+.grid {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+.grid th, .grid td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.grid th {
+    background-color: rgba(174, 172, 182, 0.495);
+}
+
+.table-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+#top-counties-table-container {
+    margin-top: 120px; 
+    margin-left: 200px; 
+}
+
