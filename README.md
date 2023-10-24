@@ -27,3 +27,4 @@ JavaScript Libraries:
 - Bootstrap: https://getbootstrap.com/docs/5.0/getting-started/javascript/
 
 ### Analysis and Conclusion: 
+This project creates a comprehensive analysis, drawing graphs that compare California housing prices to various economic health factors: Gross Domestic Product (GDP), Federal Interest Rates, and unemployment rates. Using CSV data sourced from Kaggle, publicly available government data, and JavaScript libraries such as geojson and Plotly, this project not only draws graphs to compare each Californian county to these economic factors but will also draw a heatmap connected to a timeline, showing how the average price for housing increases by county over time. Finally, this project draws a comparison to Florida to help complete the economic picture.
