@@ -3,7 +3,7 @@
 ### Project Focus: California Housing Market Analysis (1990-Present)
 
 ### Description:
-The aim of our project is to uncover the connections between California housing prices and economic stability. Our project will involve analyzing the potential correlations among median home prices by county, GDP, unemployment rates, interest rates, and overall stock market performance.
+The aim of our project is to uncover the connections between California housing prices and economic stability. Our project will involve analyzing the potential correlations among median home prices by county, GDP, unemployment rates, and interest rates.
 
 Group Members: Alpha Osita, Andrea Aguilar, Dominic Cinco, Octavio Pinedo, Sang Kim, Subha Barakoti, West Burington
 
@@ -17,7 +17,6 @@ Datasets:
 - https://fred.stlouisfed.org/series/CAUR
 - https://fred.stlouisfed.org/series/GDP
 - https://california.reaproject.org/data-tables/gsp-a200n/
-- https://www.alphavantage.co/documentation/
 - https://github.com/plotly/datasets/blob/master/geojson-counties-fips.json
 
 JavaScript Libraries:
