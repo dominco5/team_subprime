@@ -9,7 +9,7 @@ L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
 
 // Load GeoJSON data from the file and add it to the map with specified style and interactions
 
-d3.json('new_counties.geojson').then(data => {
+d3.json('../Resources/new_counties.geojson').then(data => {
     L.geoJson(data, {
         style:style,
         onEachFeature: onEachFeature
@@ -124,7 +124,7 @@ function init() {
     let dropDown1 = d3.select("#selDataset1"); 
     let dropDown2 = d3.select("#selDataset2");
 
-    d3.json("Resources/pricing_data.json").then(function(dataset) {
+    d3.json("../Resources/pricing_data.json").then(function(dataset) {
         let counties = Object.keys(dataset);
 
         let optionCount = 3;
@@ -281,7 +281,7 @@ function buildSideBySideBarGraphs(county1, county2, dataset) {
 }
 
 function optionChanged() {
-    d3.json("Resources/pricing_data.json").then(function(dataset) {
+    d3.json("../Resources/pricing_data.json").then(function(dataset) {
         let county1 = d3.select("#selDataset1").property("value");
         let county2 = d3.select("#selDataset2").property("value");
 
@@ -340,7 +340,7 @@ function plotBottomHousingPricesTable(dateIndex, housingPrices, countyNames) {
     });
 }
 
-d3.json("Resources/date_data.json").then(function(datedataset) {
+d3.json("../Resources/date_data.json").then(function(datedataset) {
     let dateKeys = Object.keys(datedataset);
     let dateSlider = document.getElementById("date-slider");
     let selectedDate = document.getElementById("selected-date");

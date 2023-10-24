@@ -24,7 +24,7 @@
         crossorigin="">
 
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!-- Plotly JavaScript -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -118,7 +118,7 @@
     <!-- D3 JavaScript -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <!-- JavaScript -->
-    <script type="text/javascript" src="app_wip.js"></script>
+    <script type="text/javascript" src="js/logic.js"></script>
 
 <!-- Container for the Plotly chart -->
 <div class="box" id="plot-box" style="margin-top: 10px;">
@@ -130,7 +130,7 @@
      <div id="myDiv"></div>
     <script>
         // Load CSV data using Plotly.d3
-        Plotly.d3.csv('project3_bubbleMarker/resources/california_florida.csv', function (err, data) {
+        Plotly.d3.csv('../Resources/california_florida.csv', function (err, data) {
             if (err) {
                 // Handle error if CSV loading fails
                 console.error('Error loading CSV:', err);
